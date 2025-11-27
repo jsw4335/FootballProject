@@ -4,7 +4,7 @@ import jwt from "jsonwebtoken";
 import { SignupDTO, LoginDTO } from "../types/user.dto";
 
 export const signup = async (userData: SignupDTO) => {
-    const { name, email, password, birth_date } = userData;
+    const { name, email, password, birthDate } = userData;
 
     const [existUser]: any = await pool.query(
         "SELECT id FROM users WHERE email = ?",
@@ -18,10 +18,8 @@ export const signup = async (userData: SignupDTO) => {
 
     const [_result]: any = await pool.query(
         "INSERT INTO users (email, password, name, birth_date) VALUES (?, ?, ?, ?)",
-        [email, hashedPassword, name, birth_date]
+        [email, hashedPassword, name, birthDate]
     );
-
-    return true;
 };
 
 export const login = async (userData: LoginDTO) => {
