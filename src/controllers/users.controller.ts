@@ -4,7 +4,7 @@ import * as usersService from "../services/users.service";
 export const signup = async (req: Request, res: Response) => {
     try {
         const result = await usersService.signup(req.body);
-        return res.status(201).json({ message: "회원가입 성공", data: result });
+        return res.status(201).json({ message: "회원가입 성공" });
     } catch (err: any) {
         return res.status(400).json({ error: err.message });
     }
