@@ -1,8 +1,9 @@
 import { pool } from "../config/db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { SignupDTO, LoginDTO } from "../types/user.dto";
 
-export const signup = async (userData: any) => {
+export const signup = async (userData: SignupDTO) => {
     const { name, email, password, birth_date } = userData;
 
     const [existUser]: any = await pool.query(
@@ -23,7 +24,7 @@ export const signup = async (userData: any) => {
     return true;
 };
 
-export const login = async (userData: any) => {
+export const login = async (userData: LoginDTO) => {
     const { email, password } = userData;
 
     const [rows]: any = await pool.query(
