@@ -9,3 +9,8 @@ export interface LoginDTO {
     email: string;
     password: string;
 }
+
+export interface UpdateProfileDTO {
+    position?: "FW" | "MF" | "DF" | "GK";
+    self_introduction?: string;
+}

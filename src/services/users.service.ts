@@ -2,6 +2,19 @@ import { pool } from "../config/db";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SignupDTO, LoginDTO } from "../types/user.dto";
+import { RowDataPacket } from "mysql2";
+
+export interface User {
+  id: number;
+  email: string;
+  password: string;
+  name: string;
+  birth_date: string;
+  position?: "FW" | "MF" | "DF" | "GK" | null;
+  self_introduction?: string | null;
+  created_at: string;
+}
+
 
 export const signup = async (userData: SignupDTO) => {
     const { name, email, password, birthDate } = userData;
@@ -46,4 +59,33 @@ export const login = async (userData: LoginDTO) => {
     );
 
     return token;
+};
+
+export const findUserProfile = async (userId: number) => {
+    const [rows] = await pool.query<(User&RowDataPacket)[]>(
+        `SELECT id, email, name, birth_date, position, self_introduction
+         FROM users WHERE id = ?`,
+        [userId]
+    );
+
+    if (rows.length === 0) throw new Error("사용자를 찾을 수 없습니다.");
+    return rows[0];
+};
+
+export const updateUserProfile = async (
+    userId: number,
+    data: { position?: string; self_introduction?: string }
+) => {
+    const { position, self_introduction } = data;
+
+    const [result] = await pool.query(
+        `
+        UPDATE users 
+        SET position = ?, self_introduction = ?
+        WHERE id = ?
+        `,
+        [position, self_introduction, userId]
+    );
+
+    return result;
 };
