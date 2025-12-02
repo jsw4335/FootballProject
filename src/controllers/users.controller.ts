@@ -21,7 +21,7 @@ export const login = async (req: Request, res: Response) => {
 
 export const getMyProfile = async (req: Request, res: Response) => {
     try {
-        const userId = req.user!.id; // authMiddleware에서 넣어줌
+        const userId = req.user!.id;
         const user = await usersService.findUserProfile(userId);
         return res.status(200).json(user);
     } catch (err: any) {

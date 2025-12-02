@@ -1,4 +1,4 @@
-import { pool } from "../config/db";
+import { pool } from "../config/db.config";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { SignupDTO, LoginDTO } from "../types/user.dto";

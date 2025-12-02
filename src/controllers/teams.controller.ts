@@ -9,7 +9,7 @@ export const createTeamController = async (req: Request, res: Response) => {
         if (!userId) {
             return res.status(401).json({ message: "유저 정보가 없습니다." });
         }
-        const result = await teamsService.createTeam(teamData, userId);
+        await teamsService.createTeam(teamData, userId);
         return res.status(201).json({ message: "팀 생성 성공"});
     } catch (err: any) {
         console.error(err);
